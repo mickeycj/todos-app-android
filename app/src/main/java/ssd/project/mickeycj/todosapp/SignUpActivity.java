@@ -2,21 +2,19 @@ package ssd.project.mickeycj.todosapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
+import ssd.project.mickeycj.todosapp.models.User;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private FirebaseAuth firebaseAuth;
     private String username, email, password, passwordConfirmation;
 
     private EditText usernameEditText, emailEditText, passwordEditText, passwordConfirmationEditText;
@@ -28,8 +26,6 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-
         initViewHolders();
     }
 
@@ -38,6 +34,7 @@ public class SignUpActivity extends AppCompatActivity {
         emailEditText = (EditText) findViewById(R.id.edittext_sign_up_email);
         passwordEditText = (EditText) findViewById(R.id.edittext_sign_up_password);
         passwordConfirmationEditText = (EditText) findViewById(R.id.edittext_sign_up_password_confirmation);
+        passwordConfirmationEditText.setOnEditorActionListener(onActionDoneListener);
         clearEditTexts();
 
         signUpButton = (Button) findViewById(R.id.button_sign_up);
@@ -49,27 +46,20 @@ public class SignUpActivity extends AppCompatActivity {
         progressDialog.setMessage("Signing up...");
     }
 
+    private TextView.OnEditorActionListener onActionDoneListener = new TextView.OnEditorActionListener() {
+        @Override
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                signUp();
+            }
+            return false;
+        }
+    };
+
     private View.OnClickListener onSignUpClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            progressDialog.show();
-            username = getUsernameFromEditText();
-            email = getEmailFromEditText();
-            password = getPasswordFromEditText();
-            passwordConfirmation = getPasswordConfirmationFromEditText();
-            if (isValidSignUp()) {
-                firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            startSignInActivity();
-                        } else {
-                            clearEditTexts();
-                        }
-                        progressDialog.dismiss();
-                    }
-                });
-            }
+            signUp();
         }
     };
 
@@ -80,14 +70,18 @@ public class SignUpActivity extends AppCompatActivity {
         }
     };
 
-    private boolean isValidSignUp() {
-        return !username.equals("") && !email.equals("") && !password.equals("") && !passwordConfirmation.equals("") && password.equals(passwordConfirmation);
+    private void signUp() {
+        username = getUsernameFromEditText();
+        email = getEmailFromEditText();
+        password = getPasswordFromEditText();
+        passwordConfirmation = getPasswordConfirmationFromEditText();
+        if (isValidSignUp()) {
+            User.signUp(email, password, SignUpActivity.this);
+        }
     }
 
-    private void startSignInActivity() {
-        startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
-        finish();
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    private boolean isValidSignUp() {
+        return !username.equals("") && !email.equals("") && !password.equals("") && !passwordConfirmation.equals("") && password.equals(passwordConfirmation);
     }
 
     private String getUsernameFromEditText() { return usernameEditText.getText().toString().trim(); }
@@ -98,10 +92,23 @@ public class SignUpActivity extends AppCompatActivity {
 
     private String getPasswordConfirmationFromEditText() { return passwordConfirmationEditText.getText().toString().trim(); }
 
-    private void clearEditTexts() {
+    public void startSignInActivity() {
+        startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
+        finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
+    public void clearEditTexts() {
         usernameEditText.setText("");
         emailEditText.setText("");
         passwordEditText.setText("");
         passwordConfirmationEditText.setText("");
     }
+
+    public void showProgressDialog() { progressDialog.show(); }
+
+    public void dismissProgressDialog() { progressDialog.dismiss(); }
+
+    @Override
+    public void onBackPressed() { startSignInActivity(); }
 }

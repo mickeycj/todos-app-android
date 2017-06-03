@@ -5,11 +5,10 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.google.firebase.auth.FirebaseAuth;
+import ssd.project.mickeycj.todosapp.models.User;
 
 public class LoadingActivity extends AppCompatActivity {
 
-    private FirebaseAuth firebaseAuth;
     private Handler handler;
     private Runnable runnable;
     private long delayTime, time = 3000L;
@@ -19,13 +18,12 @@ public class LoadingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
 
-        firebaseAuth = FirebaseAuth.getInstance();
         handler = new Handler();
         runnable = new Runnable() {
             @Override
             public void run() {
-                if (firebaseAuth.getCurrentUser() != null) {
-                    firebaseAuth.signOut();
+                if (User.isSignedIn()) {
+                    User.signOut();
                 }
                 startActivity(new Intent(LoadingActivity.this, SignInActivity.class));
                 finish();

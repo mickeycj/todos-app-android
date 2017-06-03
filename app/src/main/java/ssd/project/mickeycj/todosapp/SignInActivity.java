@@ -2,21 +2,19 @@ package ssd.project.mickeycj.todosapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
+import ssd.project.mickeycj.todosapp.models.User;
 
 public class SignInActivity extends AppCompatActivity {
 
-    private FirebaseAuth firebaseAuth;
     private String email, password;
 
     private EditText emailEditText, passwordEditText;
@@ -28,14 +26,13 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-
         initViewHolders();
     }
 
     private void initViewHolders() {
         emailEditText = (EditText) findViewById(R.id.edittext_sign_in_email);
         passwordEditText = (EditText) findViewById(R.id.edittext_sign_in_password);
+        passwordEditText.setOnEditorActionListener(onActionDoneListener);
         clearEditTexts();
 
         signInButton = (Button) findViewById(R.id.button_sign_in);
@@ -47,27 +44,20 @@ public class SignInActivity extends AppCompatActivity {
         progressDialog.setMessage("Signing in...");
     }
 
+    private TextView.OnEditorActionListener onActionDoneListener = new TextView.OnEditorActionListener() {
+        @Override
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+               signIn();
+            }
+            return false;
+        }
+    };
+
     private View.OnClickListener onSignInClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            progressDialog.show();
-            email = getEmailFromEditText();
-            password = getPasswordFromEditText();
-            if (isValidSignIn()) {
-                firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(SignInActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            startActivity(new Intent(SignInActivity.this, MainActivity.class));
-                            finish();
-                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                        } else {
-                            clearEditTexts();
-                        }
-                        progressDialog.dismiss();
-                    }
-                });
-            }
+            signIn();
         }
     };
 
@@ -80,6 +70,14 @@ public class SignInActivity extends AppCompatActivity {
         }
     };
 
+    private void signIn() {
+        email = getEmailFromEditText();
+        password = getPasswordFromEditText();
+        if (isValidSignIn()) {
+            User.signIn(email, password, SignInActivity.this);
+        }
+    }
+
     private boolean isValidSignIn() {
         return !email.equals("") && !password.equals("");
     }
@@ -88,8 +86,18 @@ public class SignInActivity extends AppCompatActivity {
 
     private String getPasswordFromEditText() { return passwordEditText.getText().toString().trim(); }
 
-    private void clearEditTexts() {
+    public void startMainActivity() {
+        startActivity(new Intent(SignInActivity.this, MainActivity.class));
+        finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    public void clearEditTexts() {
         emailEditText.setText("");
         passwordEditText.setText("");
     }
+
+    public void showProgressDialog() { progressDialog.show(); }
+
+    public void dismissProgressDialog() { progressDialog.dismiss(); }
 }
