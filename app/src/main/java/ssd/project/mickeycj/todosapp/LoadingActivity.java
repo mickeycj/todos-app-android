@@ -5,8 +5,11 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class LoadingActivity extends AppCompatActivity {
 
+    private FirebaseAuth firebaseAuth;
     private Handler handler;
     private Runnable runnable;
     private long delayTime, time = 3000L;
@@ -16,13 +19,14 @@ public class LoadingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
 
+        firebaseAuth = FirebaseAuth.getInstance();
         handler = new Handler();
         runnable = new Runnable() {
             @Override
             public void run() {
-                // TODO Sign-out current user if exists
-
-                // Then go to sign-in activity
+                if (firebaseAuth.getCurrentUser() != null) {
+                    firebaseAuth.signOut();
+                }
                 startActivity(new Intent(LoadingActivity.this, SignInActivity.class));
                 finish();
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
