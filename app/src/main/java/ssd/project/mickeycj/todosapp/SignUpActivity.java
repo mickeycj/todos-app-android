@@ -76,7 +76,7 @@ public class SignUpActivity extends AppCompatActivity {
         password = getPasswordFromEditText();
         passwordConfirmation = getPasswordConfirmationFromEditText();
         if (isValidSignUp()) {
-            User.signUp(email, password, SignUpActivity.this);
+            User.signUp(username, email, password, SignUpActivity.this);
         }
     }
 

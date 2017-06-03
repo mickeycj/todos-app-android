@@ -11,9 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import ssd.project.mickeycj.todosapp.models.User;
 
-public class SignInActivity extends AppCompatActivity {
+public class SignInActivity extends AppCompatActivity implements Observer {
 
     private String email, password;
 
@@ -25,6 +28,8 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+
+        User.getCurrentUser().addObserver(this);
 
         initViewHolders();
     }
@@ -48,7 +53,7 @@ public class SignInActivity extends AppCompatActivity {
         @Override
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-               signIn();
+                signIn();
             }
             return false;
         }
@@ -86,12 +91,6 @@ public class SignInActivity extends AppCompatActivity {
 
     private String getPasswordFromEditText() { return passwordEditText.getText().toString().trim(); }
 
-    public void startMainActivity() {
-        startActivity(new Intent(SignInActivity.this, MainActivity.class));
-        finish();
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-    }
-
     public void clearEditTexts() {
         emailEditText.setText("");
         passwordEditText.setText("");
@@ -100,4 +99,11 @@ public class SignInActivity extends AppCompatActivity {
     public void showProgressDialog() { progressDialog.show(); }
 
     public void dismissProgressDialog() { progressDialog.dismiss(); }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        startActivity(new Intent(SignInActivity.this, MainActivity.class));
+        finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
 }

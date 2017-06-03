@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "52496905696-hti9gdbb9nk6d9qi6h2kef48q9dub05d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ssd.project.mickeycj.todosapp",
+            "certificate_hash": "ae9397b6385471a2c954e0681609fda482a7864d"
+          }
+        },
+        {
           "client_id": "52496905696-f89ad3g7m5qlf6l31c59vbbq6mvas11u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViewHolders() {
         usernameTextView = (TextView) findViewById(R.id.textview_username);
+        // TODO Set username
+        usernameTextView.setText(User.getCurrentUser().getUsername());
 
         helpButton = (Button) findViewById(R.id.button_help);
         helpButton.setOnClickListener(onHelpClickListener);
@@ -74,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener onViewProfileClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            usernameTextView.setText(User.getCurrentUser().getUsername());
         }
     };
 
