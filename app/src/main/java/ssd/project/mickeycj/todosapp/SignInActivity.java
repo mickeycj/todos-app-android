@@ -29,7 +29,7 @@ public class SignInActivity extends AppCompatActivity implements Observer {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-        User.getCurrentUser().addObserver(this);
+        User.getCurrentUser().addObserver(SignInActivity.this);
 
         initViewHolders();
     }
@@ -45,7 +45,7 @@ public class SignInActivity extends AppCompatActivity implements Observer {
         signUpButton = (Button) findViewById(R.id.button_sign_up_now);
         signUpButton.setOnClickListener(onSignUpClickListener);
 
-        progressDialog = new ProgressDialog(this);
+        progressDialog = new ProgressDialog(SignInActivity.this);
         progressDialog.setMessage("Signing in...");
     }
 

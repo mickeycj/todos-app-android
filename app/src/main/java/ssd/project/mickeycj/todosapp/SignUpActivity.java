@@ -42,7 +42,7 @@ public class SignUpActivity extends AppCompatActivity {
         cancelButton = (Button) findViewById(R.id.button_cancel);
         cancelButton.setOnClickListener(onCancelClickListener);
 
-        progressDialog = new ProgressDialog(this);
+        progressDialog = new ProgressDialog(SignUpActivity.this);
         progressDialog.setMessage("Signing up...");
     }
 
@@ -66,7 +66,7 @@ public class SignUpActivity extends AppCompatActivity {
     private View.OnClickListener onCancelClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            startSignInActivity();
+            onBackPressed();
         }
     };
 

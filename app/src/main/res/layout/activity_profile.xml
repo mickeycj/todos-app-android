@@ -6,7 +6,7 @@
     android:background="@drawable/bg_black">
 
     <RelativeLayout
-        android:id="@+id/layout_app_bar_main"
+        android:id="@+id/layout_app_bar_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -14,7 +14,7 @@
         android:background="@drawable/bg_green">
 
         <TextView
-            android:id="@+id/textview_username_main"
+            android:id="@+id/textview_username_profile"
             android:text="@string/username"
             android:textSize="24sp"
             android:textColor="@color/white"
@@ -24,7 +24,7 @@
             android:paddingRight="5dp" />
 
         <Button
-            android:id="@+id/button_help_main"
+            android:id="@+id/button_help_profile"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_centerVertical="true"
@@ -81,33 +81,79 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="60dp">
 
-            <Button
-                android:id="@+id/button_view_todos"
-                android:text="@string/view_todos"
-                android:textSize="20sp"
-                android:textColor="@color/white"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="@string/username_title"
+                    android:textSize="18sp"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/textview_detail_username"
+                    android:textSize="18sp"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_gray" />
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:text="@string/email_title"
+                    android:textSize="18sp"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/textview_detail_email"
+                    android:textSize="18sp"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:text="@string/joined_at_title"
+                    android:textSize="18sp"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/textview_detail_joined_at"
+                    android:textSize="18sp"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
 
             <Button
-                android:id="@+id/button_view_profile"
-                android:text="@string/view_profile"
+                android:id="@+id/button_back_from_profile"
+                android:text="@string/back_to_main"
                 android:textSize="20sp"
                 android:textColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/bg_gray" />
-
-            <Button
-                android:id="@+id/button_sign_out"
-                android:text="@string/sign_out"
-                android:textSize="20sp"
-                android:textColor="@color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="50dp"
                 android:background="@drawable/bg_gray" />
         </LinearLayout>
     </LinearLayout>

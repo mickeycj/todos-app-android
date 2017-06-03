@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -18,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private Runnable runnable;
     private long delayTime, time = 1500L;
 
-    private TextView usernameTextView;
+    private TextView usernameAppBarTextView;
     private Button helpButton, viewTodosButtons, viewProfileButton, signOutButton;
     private ProgressDialog progressDialog;
 
@@ -43,11 +42,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViewHolders() {
-        usernameTextView = (TextView) findViewById(R.id.textview_username);
-        // TODO Set username
-        usernameTextView.setText(User.getCurrentUser().getUsername());
+        usernameAppBarTextView = (TextView) findViewById(R.id.textview_username_main);
+        usernameAppBarTextView.setText(User.getCurrentUser().getUsername());
 
-        helpButton = (Button) findViewById(R.id.button_help);
+        helpButton = (Button) findViewById(R.id.button_help_main);
         helpButton.setOnClickListener(onHelpClickListener);
         viewTodosButtons = (Button) findViewById(R.id.button_view_todos);
         viewTodosButtons.setOnClickListener(onViewTodosClickListener);
@@ -56,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         signOutButton = (Button) findViewById(R.id.button_sign_out);
         signOutButton.setOnClickListener(onSignOutClickListener);
 
-        progressDialog = new ProgressDialog(this);
+        progressDialog = new ProgressDialog(MainActivity.this);
         progressDialog.setMessage("Signing out...");
     }
 
@@ -77,22 +75,18 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener onViewProfileClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            usernameTextView.setText(User.getCurrentUser().getUsername());
+            startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+            finish();
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
     };
 
     private View.OnClickListener onSignOutClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            signOut();
+            onBackPressed();
         }
     };
-
-    private void signOut() {
-        progressDialog.show();
-        handler.postDelayed(runnable, delayTime = time);
-        time = System.currentTimeMillis();
-    }
 
     @Override
     public void onPause() {
@@ -102,5 +96,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() { signOut(); }
+    public void onBackPressed() {
+        progressDialog.show();
+        handler.postDelayed(runnable, delayTime = time);
+        time = System.currentTimeMillis();
+    }
 }
