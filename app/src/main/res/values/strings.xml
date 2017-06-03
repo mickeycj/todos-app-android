@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">TodosApp</string>
+    <string name="app_name">TODOS APP</string>
+    <string name="username">USERNAME</string>
+    <string name="email">EMAIL</string>
+    <string name="password">PASSWORD</string>
+    <string name="password_confirmation">PASSWORD CONFIRMATION</string>
+    <string name="sign_in">SIGN IN</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="sign_up_now">SIGN UP NOW!</string>
+    <string name="cancel">CANCEL</string>
 </resources>
