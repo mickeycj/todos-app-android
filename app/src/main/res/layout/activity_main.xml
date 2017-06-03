@@ -57,7 +57,7 @@
             android:orientation="vertical"
             android:gravity="center_horizontal"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="40dp">
 
             <ImageView
                 android:layout_width="100dp"
@@ -88,7 +88,7 @@
                 android:textColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_green" />
+                android:background="@drawable/bg_gray" />
 
             <Button
                 android:id="@+id/button_view_profile"
@@ -98,7 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:background="@drawable/bg_green" />
+                android:background="@drawable/bg_gray" />
 
             <Button
                 android:id="@+id/button_sign_out"
@@ -108,7 +108,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:background="@drawable/bg_green" />
+                android:background="@drawable/bg_gray" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
