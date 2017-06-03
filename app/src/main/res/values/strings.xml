@@ -7,5 +7,8 @@
     <string name="sign_in">SIGN IN</string>
     <string name="sign_up">SIGN UP</string>
     <string name="sign_up_now">SIGN UP NOW!</string>
+    <string name="sign_out">SIGN OUT</string>
     <string name="cancel">CANCEL</string>
+    <string name="view_todos">VIEW ALL TODOS</string>
+    <string name="view_profile">VIEW PROFILE</string>
 </resources>

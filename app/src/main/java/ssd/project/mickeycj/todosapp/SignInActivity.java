@@ -58,8 +58,9 @@ public class SignInActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // TODO start main activity
-
+                            startActivity(new Intent(SignInActivity.this, MainActivity.class));
+                            finish();
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         } else {
                             clearEditTexts();
                         }
