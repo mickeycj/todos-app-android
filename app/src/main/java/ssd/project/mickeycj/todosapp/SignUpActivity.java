@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import ssd.project.mickeycj.todosapp.models.User;
+import ssd.project.mickeycj.todosapp.views.dialog.AlertDialog;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -81,7 +82,63 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private boolean isValidSignUp() {
-        return !username.equals("") && !email.equals("") && !password.equals("") && !passwordConfirmation.equals("") && password.equals(passwordConfirmation);
+        boolean valid = true;
+        String alertTitle = "";
+        StringBuilder alertContent = new StringBuilder();
+        if (username.equals("")) {
+            if (alertTitle.length() == 0) {
+                alertTitle = getString(R.string.uncompleted_form);
+            }
+            if (alertContent.length() == 0) {
+                alertContent.append("\n");
+            }
+            alertContent.append(getString(R.string.missing_username));
+            valid = false;
+        }
+        if (email.equals("")) {
+            if (alertTitle.length() == 0) {
+                alertTitle = getString(R.string.uncompleted_form);
+            }
+            if (alertContent.length() != 0) {
+                alertContent.append("\n");
+            }
+            alertContent.append(getString(R.string.missing_email));
+            valid = false;
+        }
+        if (password.equals("")) {
+            if (alertTitle.length() == 0) {
+                alertTitle = getString(R.string.uncompleted_form);
+            }
+            if (alertContent.length() != 0) {
+                alertContent.append("\n");
+            }
+            alertContent.append(getString(R.string.missing_password));
+            valid = false;
+        }
+        if (passwordConfirmation.equals("")) {
+            if (alertTitle.length() == 0) {
+                alertTitle = getString(R.string.uncompleted_form);
+            }
+            if (alertContent.length() != 0) {
+                alertContent.append("\n");
+            }
+            alertContent.append(getString(R.string.missing_password_confirmation));
+            valid = false;
+        }
+        if (!password.equals("") && !passwordConfirmation.equals("") && !password.equals(passwordConfirmation)) {
+            if (alertTitle.length() == 0) {
+                alertTitle = getString(R.string.wrong_confirmation);
+            }
+            alertContent.append(getString(R.string.wrong_confirmation_detail));
+            valid = false;
+        }
+        if (alertTitle.length() != 0) {
+            new AlertDialog(SignUpActivity.this)
+                    .setAlertTitle(alertTitle)
+                    .setAlertContent(alertContent.toString())
+                    .show();
+        }
+        return valid;
     }
 
     private String getUsernameFromEditText() { return usernameEditText.getText().toString().trim(); }

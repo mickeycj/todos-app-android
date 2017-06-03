@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">TODOS APP</string>
+
     <string name="username">USERNAME</string>
     <string name="email">EMAIL</string>
     <string name="password">PASSWORD</string>
@@ -7,12 +8,27 @@
     <string name="username_title">USERNAME :</string>
     <string name="email_title">EMAIL :</string>
     <string name="joined_at_title">JOINED :</string>
+
+    <string name="invalid_sign_in">INVALID SIGN-IN!</string>
+    <string name="invalid_sign_in_detail_1">- This account does not exist</string>
+    <string name="invalid_sign_in_detail_2">- Incorrect email or password</string>
+    <string name="invalid_sign_up">INVALID SIGN-UP!</string>
+    <string name="invalid_sign_up_detail">- This email may have already been taken</string>
+    <string name="uncompleted_form">FORM NOT COMPLETED!</string>
+    <string name="missing_username">- Username is missing</string>
+    <string name="missing_email">- Email is missing</string>
+    <string name="missing_password">- Password is missing</string>
+    <string name="missing_password_confirmation">- Password confirmation is missing</string>
+    <string name="wrong_confirmation">WRONG PASSWORD CONFIRMATION!</string>
+    <string name="wrong_confirmation_detail">- Password confirmation mismatch</string>
+
     <string name="sign_in">SIGN IN</string>
     <string name="sign_up">SIGN UP</string>
     <string name="sign_up_now">SIGN UP NOW!</string>
     <string name="sign_out">SIGN OUT</string>
-    <string name="cancel">CANCEL</string>
-    <string name="back_to_main">BACK TO MAIN MENU</string>
+
     <string name="view_todos">VIEW ALL TODOS</string>
     <string name="view_profile">VIEW PROFILE</string>
+    <string name="back_to_main">BACK TO MAIN MENU</string>
+    <string name="close">CLOSE</string>
 </resources>

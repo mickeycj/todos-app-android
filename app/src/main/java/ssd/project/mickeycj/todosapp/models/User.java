@@ -15,8 +15,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Date;
 import java.util.Observable;
 
+import ssd.project.mickeycj.todosapp.R;
 import ssd.project.mickeycj.todosapp.SignInActivity;
 import ssd.project.mickeycj.todosapp.SignUpActivity;
+import ssd.project.mickeycj.todosapp.views.dialog.AlertDialog;
 
 /**
  * Created by user on 3/6/60.
@@ -70,6 +72,11 @@ public class User extends Observable {
                     });
                 } else {
                     signInActivity.clearEditTexts();
+                    new AlertDialog(signInActivity)
+                            .setAlertTitle(signInActivity.getString(R.string.invalid_sign_in))
+                            .setAlertContent(signInActivity.getString(R.string.invalid_sign_in_detail_1)
+                                    + "\n" + signInActivity.getString(R.string.invalid_sign_in_detail_2))
+                            .show();
                 }
                 signInActivity.dismissProgressDialog();
             }
@@ -87,6 +94,10 @@ public class User extends Observable {
                     signUpActivity.startSignInActivity();
                 } else {
                     signUpActivity.clearEditTexts();
+                    new AlertDialog(signUpActivity)
+                            .setAlertTitle(signUpActivity.getString(R.string.invalid_sign_up))
+                            .setAlertContent(signUpActivity.getString(R.string.invalid_sign_up_detail))
+                            .show();
                 }
                 signUpActivity.dismissProgressDialog();
             }

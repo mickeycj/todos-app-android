@@ -15,6 +15,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import ssd.project.mickeycj.todosapp.models.User;
+import ssd.project.mickeycj.todosapp.views.dialog.AlertDialog;
 
 public class SignInActivity extends AppCompatActivity implements Observer {
 
@@ -84,7 +85,36 @@ public class SignInActivity extends AppCompatActivity implements Observer {
     }
 
     private boolean isValidSignIn() {
-        return !email.equals("") && !password.equals("");
+        boolean valid = true;
+        String alertTitle = "";
+        StringBuilder alertContent = new StringBuilder();
+        if (email.equals("")) {
+            if (alertTitle.length() == 0) {
+                alertTitle = getString(R.string.uncompleted_form);
+            }
+            if (alertContent.length() != 0) {
+                alertContent.append("\n");
+            }
+            alertContent.append(getString(R.string.missing_email));
+            valid = false;
+        }
+        if (password.equals("")) {
+            if (alertTitle.length() == 0) {
+                alertTitle = getString(R.string.uncompleted_form);
+            }
+            if (alertContent.length() != 0) {
+                alertContent.append("\n");
+            }
+            alertContent.append(getString(R.string.missing_password));
+            valid = false;
+        }
+        if (alertTitle.length() != 0) {
+            new AlertDialog(SignInActivity.this)
+                    .setAlertTitle(alertTitle)
+                    .setAlertContent(alertContent.toString())
+                    .show();
+        }
+        return valid;
     }
 
     private String getEmailFromEditText() { return emailEditText.getText().toString().trim(); }
