@@ -1,4 +1,4 @@
-package ssd.project.mickeycj.todosapp.models;
+package ssd.project.mickeycj.todosapp.model;
 
 import android.support.annotation.NonNull;
 
@@ -18,7 +18,7 @@ import java.util.Observable;
 import ssd.project.mickeycj.todosapp.R;
 import ssd.project.mickeycj.todosapp.SignInActivity;
 import ssd.project.mickeycj.todosapp.SignUpActivity;
-import ssd.project.mickeycj.todosapp.views.dialog.AlertDialog;
+import ssd.project.mickeycj.todosapp.view.dialog.AlertDialog;
 
 /**
  * Created by user on 3/6/60.
@@ -55,6 +55,7 @@ public class User extends Observable {
                                 currentUser.setJoinedAt(dataSnapshot.child("joined_at").getValue(Date.class));
                                 currentUser.setChanged();
                                 currentUser.notifyObservers();
+                                signInActivity.dismissProgressDialog();
                             }
                         }
 
@@ -71,6 +72,7 @@ public class User extends Observable {
                         public void onCancelled(DatabaseError databaseError) {}
                     });
                 } else {
+                    signInActivity.dismissProgressDialog();
                     signInActivity.clearEditTexts();
                     new AlertDialog(signInActivity)
                             .setAlertTitle(signInActivity.getString(R.string.invalid_sign_in))
@@ -78,7 +80,6 @@ public class User extends Observable {
                                     + "\n" + signInActivity.getString(R.string.invalid_sign_in_detail_2))
                             .show();
                 }
-                signInActivity.dismissProgressDialog();
             }
         });
     }
