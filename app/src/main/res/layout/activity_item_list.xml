@@ -15,7 +15,7 @@
         android:background="@drawable/bg_green">
 
         <TextView
-            android:id="@+id/textview_username_itemlist"
+            android:id="@+id/textview_username_item_list"
             android:text="@string/username"
             android:textSize="24sp"
             android:textColor="@color/white"
@@ -25,7 +25,7 @@
             android:paddingRight="5dp" />
 
         <Button
-            android:id="@+id/button_help_itemlist"
+            android:id="@+id/button_help_item_list"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_centerVertical="true"
@@ -65,7 +65,7 @@
 
         <Button
             android:id="@+id/button_new_item"
-            android:text="@string/new_todo"
+            android:text="@string/new_item"
             android:textSize="18sp"
             android:textColor="@color/white"
             android:layout_width="match_parent"

@@ -27,13 +27,25 @@ public class Repository {
 
     public static List<Todo> getCurrentTodoList() { return currentRepository.getTodoList(); }
 
-    public static Todo getTodoFromCurrentTodoList(int index) { return currentRepository.getTodo(index); }
+    public static Todo getTodoFromCurrentTodoList(int todoIndex) { return currentRepository.getTodo(todoIndex); }
+
+    public static List<Item> getCurrentItemListFromCurrentTodo(int todoIndex) { return currentRepository.getItemListOf(todoIndex); }
+
+    public static Item getCurrentItemFromCurrentTodo(int todoIndex, int itemIndex) { return currentRepository.getItemFrom(todoIndex, itemIndex); }
 
     public static void addNewTodoToCurrentTodoList(Todo todo) { currentRepository.addNewTodo(todo); }
 
     public static void removeTodoFromCurrentTodoList(String title) { currentRepository.removeTodo(title); }
 
-    public static void removeTodoFromCurrentTodoList(int index) { removeTodoFromCurrentTodoList(currentRepository.getTodo(index).getTitle()); }
+    public static void removeTodoFromCurrentTodoList(int todoIndex) { removeTodoFromCurrentTodoList(currentRepository.getTodo(todoIndex).getTitle()); }
+
+    public static void addNewItemToCurrentItemListInCurrentTodo(int todoIndex, Item item) { currentRepository.addNewItem(todoIndex, item); }
+
+    public static void removeItemFromCurrentItemListInCurrentTodo(int todoIndex, String title) { currentRepository.removeItem(todoIndex, title); }
+
+    public static void removeItemFromCurrentItemLsitInCurrentTodo(int todoIndex, int itemIndex) { removeItemFromCurrentItemListInCurrentTodo(todoIndex, currentRepository.getItemFrom(todoIndex, itemIndex).getTitle()); }
+
+    public static void setItemDoneFromCurrentItemlistInCurrentTodo(int todoIndex, int itemIndex, boolean done) { currentRepository.setItemDone(todoIndex, itemIndex, done); }
 
     private DatabaseReference todoListDatabaseReference;
     private DatabaseReference itemListDatabaseReference;
@@ -52,8 +64,7 @@ public class Repository {
                 String title = dataSnapshot.getKey().replace('_', ' ');
                 boolean importance = dataSnapshot.child("importance").getValue(Boolean.class);
                 Date createdAt = dataSnapshot.child("created_at").getValue(Date.class);
-                Todo todo = new Todo(title, importance, createdAt);
-                final List<Item> itemList = new ArrayList<>();
+                final Todo todo = new Todo(title, importance, createdAt);
                 itemListDatabaseReference = dataSnapshot.child("item_list").getRef();
                 itemListDatabaseReference.addChildEventListener(new ChildEventListener() {
                     @Override
@@ -61,7 +72,7 @@ public class Repository {
                         String title = dataSnapshot.getKey().replace('_', ' ');
                         boolean done = dataSnapshot.child("is_done").getValue(Boolean.class);
                         Date createdAt = dataSnapshot.child("created_at").getValue(Date.class);
-                        itemList.add(new Item(title, done, createdAt));
+                        todo.addItem(new Item(title, done, createdAt));
                     }
 
                     @Override
@@ -76,7 +87,6 @@ public class Repository {
                     @Override
                     public void onCancelled(DatabaseError databaseError) { }
                 });
-                todo.setItemList(itemList);
                 todoList.add(todo);
             }
 
@@ -98,7 +108,11 @@ public class Repository {
 
     private List<Todo> getTodoList() { return todoList; }
 
-    private Todo getTodo(int index) { return todoList.get(index); }
+    private Todo getTodo(int todoIndex) { return todoList.get(todoIndex); }
+
+    private List<Item> getItemListOf(int todoIndex) { return todoList.get(todoIndex).getItemList(); }
+
+    private Item getItemFrom(int todoIndex, int itemIndex) { return todoList.get(todoIndex).getItemList().get(itemIndex); }
 
     private void addNewTodo(Todo todo) {
         todoListDatabaseReference.child(todo.getTitle().replace(' ', '_')).child("importance").setValue(todo.isImportant());
@@ -113,5 +127,32 @@ public class Repository {
             }
         }
         todoListDatabaseReference.child(title.replace(' ', '_')).setValue(null);
+    }
+
+    private void addNewItem(int todoIndex, Item item) {
+        itemListDatabaseReference = todoListDatabaseReference.child(todoList.get(todoIndex).getTitle().replace(' ', '_')).child("item_list").getRef();
+        itemListDatabaseReference.child(item.getTitle().replace(' ', '_')).child("is_done").setValue(item.isDone());
+        itemListDatabaseReference.child(item.getTitle().replace(' ', '_')).child("created_at").setValue(item.getCreatedAt());
+    }
+
+    private void removeItem(int todoIndex, String title) {
+        for (Item item : todoList.get(todoIndex).getItemList()) {
+            if (item.getTitle().equals(title)) {
+                todoList.get(todoIndex).getItemList().remove(item);
+                break;
+            }
+        }
+        itemListDatabaseReference = todoListDatabaseReference.child(todoList.get(todoIndex).getTitle().replace(' ', '_')).child("item_list").getRef();
+        itemListDatabaseReference.child(title.replace(' ', '_')).setValue(null);
+    }
+
+    private void setItemDone(int todoIndex, int itemIndex, boolean done) {
+        Item item = todoList.get(todoIndex).getItem(itemIndex);
+        if (done) {
+            item.markAsDone();
+        } else {
+            item.markAsNotDone();
+        }
+        addNewItem(todoIndex, item);
     }
 }

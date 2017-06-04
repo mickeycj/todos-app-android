@@ -69,7 +69,11 @@ public class TodoListActivity extends AppCompatActivity {
             View.OnClickListener onShowItemListClickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent intent = new Intent(TodoListActivity.this, ItemListActivity.class);
+                    intent.putExtra("todoIndex", position);
+                    startActivity(intent);
+                    finish();
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             };
 

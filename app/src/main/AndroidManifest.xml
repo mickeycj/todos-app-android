@@ -23,7 +23,8 @@
         <activity android:name=".TodoListActivity" />
         <activity android:name=".NewTodoActivity" />
         <activity android:name=".EditTodoActivity" />
-        <activity android:name=".ItemListActivity"></activity>
+        <activity android:name=".ItemListActivity" />
+        <activity android:name=".NewItemActivity"></activity>
     </application>
 
 </manifest>

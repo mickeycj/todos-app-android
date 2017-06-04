@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ssd.project.mickeycj.todosapp.model.Item;
+import ssd.project.mickeycj.todosapp.model.Repository;
 import ssd.project.mickeycj.todosapp.model.User;
 import ssd.project.mickeycj.todosapp.view.OnViewHolderClickListener;
 import ssd.project.mickeycj.todosapp.view.adapter.ItemListAdapter;
@@ -44,17 +45,16 @@ public class ItemListActivity extends AppCompatActivity {
     }
 
     private void initViewHolders() {
-        String username = User.getCurrentUser().getUsername();
-        usernameAppBarTextView = (TextView) findViewById(R.id.textview_username_todo_list);
-        usernameAppBarTextView.setText(username);
-        ownerTextView = (TextView) findViewById(R.id.textview_todo_list_owner);
-        ownerTextView.setText(String.format(getString(R.string.todo_list_owner), username));
+        usernameAppBarTextView = (TextView) findViewById(R.id.textview_username_item_list);
+        usernameAppBarTextView.setText(User.getCurrentUser().getUsername());
+        ownerTextView = (TextView) findViewById(R.id.textview_item_list_owner);
+        ownerTextView.setText(String.format(getString(R.string.item_list_owner), Repository.getTodoFromCurrentTodoList(todoIndex).getTitle()));
 
-        helpButton = (Button) findViewById(R.id.button_help_todo_list);
+        helpButton = (Button) findViewById(R.id.button_help_item_list);
         helpButton.setOnClickListener(onHelpClickListener);
-        newItemButton = (Button) findViewById(R.id.button_new_todo);
+        newItemButton = (Button) findViewById(R.id.button_new_item);
         newItemButton.setOnClickListener(onNewItemClickListener);
-        backButton = (Button) findViewById(R.id.button_back_from_todo_list);
+        backButton = (Button) findViewById(R.id.button_back_from_item_list);
         backButton.setOnClickListener(onBackClickListener);
 
         itemListRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_item_list);
@@ -65,12 +65,13 @@ public class ItemListActivity extends AppCompatActivity {
 
     private OnViewHolderClickListener onItemClickListener = new OnViewHolderClickListener() {
         @Override
-        public void onItemClick(View view, int position) {
+        public void onItemClick(View view, final int position) {
+            final Item item = itemList.get(position);
             final OptionsDialog optionsDialog = new OptionsDialog(ItemListActivity.this);
             View.OnClickListener onMarkItemClickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Repository.setItemDoneFromCurrentItemlistInCurrentTodo(todoIndex, position, !item.isDone());
                     updateItemList();
                     optionsDialog.dismiss();
                 }
@@ -86,14 +87,14 @@ public class ItemListActivity extends AppCompatActivity {
             View.OnClickListener onDeleteItemClickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Repository.removeItemFromCurrentItemLsitInCurrentTodo(todoIndex, position);
                     updateItemList();
                     optionsDialog.dismiss();
                 }
             };
             optionsDialog
                     .setOptionsTitle(String.format(getString(R.string.options_title), "ITEM"))
-                    .setFirstOptionButton(getString(R.string.option_mark_item), onMarkItemClickListener)
+                    .setFirstOptionButton(String.format(getString(R.string.option_mark_item), (!item.isDone()) ? "" : "NOT "), onMarkItemClickListener)
                     .setSecondOptionButton(getString(R.string.option_edit_item), onEditItemClickListener)
                     .setThirdOptionButton(getString(R.string.option_delete_item), onDeleteItemClickListener)
                     .show();
@@ -110,7 +111,11 @@ public class ItemListActivity extends AppCompatActivity {
     private View.OnClickListener onNewItemClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            startActivity(NewTodoActivity.class, R.anim.slide_in_right, R.anim.slide_out_left);
+            Intent intent = new Intent(ItemListActivity.this, NewItemActivity.class);
+            intent.putExtra("todoIndex", todoIndex);
+            startActivity(intent);
+            finish();
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
     };
 
@@ -131,10 +136,10 @@ public class ItemListActivity extends AppCompatActivity {
         if (!itemList.isEmpty()) {
             itemList.clear();
         }
-
+        itemList.addAll(Repository.getCurrentItemListFromCurrentTodo(todoIndex));
         itemListAdapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onBackPressed() { startActivity(MainActivity.class, R.anim.slide_in_left, R.anim.slide_out_right); }
+    public void onBackPressed() { startActivity(TodoListActivity.class, R.anim.slide_in_left, R.anim.slide_out_right); }
 }
