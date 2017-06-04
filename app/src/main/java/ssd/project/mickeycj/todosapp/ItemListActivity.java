@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import ssd.project.mickeycj.todosapp.model.Item;
@@ -79,7 +80,10 @@ public class ItemListActivity extends AppCompatActivity {
             View.OnClickListener onEditItemClickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent intent = new Intent(ItemListActivity.this, EditItemActivity.class);
+                    intent.putExtra("todoIndex", todoIndex).putExtra("itemIndex", position);
+                    optionsDialog.dismiss();
+                    startActivity(intent);
                     finish();
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
@@ -137,6 +141,12 @@ public class ItemListActivity extends AppCompatActivity {
             itemList.clear();
         }
         itemList.addAll(Repository.getCurrentItemListFromCurrentTodo(todoIndex));
+        itemList.sort(new Comparator<Item>() {
+            @Override
+            public int compare(Item item1, Item item2) {
+                return item1.getCreatedAt().compareTo(item2.getCreatedAt());
+            }
+        });
         itemListAdapter.notifyDataSetChanged();
     }
 

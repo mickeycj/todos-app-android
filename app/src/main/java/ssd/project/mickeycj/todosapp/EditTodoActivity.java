@@ -20,6 +20,7 @@ import ssd.project.mickeycj.todosapp.view.dialog.AlertDialog;
 
 public class EditTodoActivity extends AppCompatActivity {
 
+    private int todoIndex;
     private String todoTitle;
     private boolean todoImportance;
     private Date todoCreatedAt;
@@ -34,7 +35,8 @@ public class EditTodoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_todo);
 
-        Todo todo = Repository.getTodoFromCurrentTodoList(getIntent().getIntExtra("todoIndex", 0));
+        todoIndex = getIntent().getIntExtra("todoIndex", 0);
+        Todo todo = Repository.getTodoFromCurrentTodoList(todoIndex);
         todoTitle = todo.getTitle();
         todoImportance = todo.isImportant();
         todoCreatedAt = todo.getCreatedAt();
@@ -104,6 +106,9 @@ public class EditTodoActivity extends AppCompatActivity {
         boolean importance = getTodoImportanceFromCheckBox();
         if (!title.equals("") && !title.contains(".") && !title.contains("#") && !title.contains("$") && !title.contains("[") && !title.contains("]")) {
             if (!todoTitle.equals(title) || todoImportance != importance) {
+                if (!todoTitle.equals(title)) {
+                    Repository.relocateItemsInCurrentItemListFromCurrentTodo(title, Repository.getCurrentItemListFromCurrentTodo(todoIndex));
+                }
                 Repository.removeTodoFromCurrentTodoList(todoTitle);
             }
             Repository.addNewTodoToCurrentTodoList(new Todo(title, importance, todoCreatedAt));
@@ -119,6 +124,7 @@ public class EditTodoActivity extends AppCompatActivity {
                         .setAlertContent(getString(R.string.invalid_characters_details))
                         .show();
             }
+            resetForm();
         }
     }
 

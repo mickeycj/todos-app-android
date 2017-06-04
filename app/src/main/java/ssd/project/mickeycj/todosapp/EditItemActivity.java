@@ -50,7 +50,7 @@ public class EditItemActivity extends AppCompatActivity {
 
         itemTitleEditText = (EditText) findViewById(R.id.edittext_edit_item_title);
         itemTitleEditText.setOnEditorActionListener(onActionDoneListener);
-        itemTitleEditText.setText("");
+        itemTitleEditText.setText(itemTitle);
 
         helpButton = (Button) findViewById(R.id.button_help_edit_item);
         helpButton.setOnClickListener(onHelpClickListener);
@@ -113,6 +113,7 @@ public class EditItemActivity extends AppCompatActivity {
                         .setAlertContent(getString(R.string.invalid_characters_details))
                         .show();
             }
+            itemTitleEditText.setText(itemTitle);
         }
     }
 

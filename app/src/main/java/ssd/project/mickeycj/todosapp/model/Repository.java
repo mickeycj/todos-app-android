@@ -41,6 +41,8 @@ public class Repository {
 
     public static void addNewItemToCurrentItemListInCurrentTodo(int todoIndex, Item item) { currentRepository.addNewItem(todoIndex, item); }
 
+    public static void relocateItemsInCurrentItemListFromCurrentTodo(String title, List<Item> itemList) { currentRepository.relocateItems(title, itemList); }
+
     public static void removeItemFromCurrentItemListInCurrentTodo(int todoIndex, String title) { currentRepository.removeItem(todoIndex, title); }
 
     public static void removeItemFromCurrentItemLsitInCurrentTodo(int todoIndex, int itemIndex) { removeItemFromCurrentItemListInCurrentTodo(todoIndex, currentRepository.getItemFrom(todoIndex, itemIndex).getTitle()); }
@@ -61,17 +63,31 @@ public class Repository {
         todoListDatabaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                String title = dataSnapshot.getKey().replace('_', ' ');
-                boolean importance = dataSnapshot.child("importance").getValue(Boolean.class);
-                Date createdAt = dataSnapshot.child("created_at").getValue(Date.class);
+                String title = "";
+                boolean importance = false;
+                Date createdAt = null;
+                try {
+                    title = dataSnapshot.getKey().replace('_', ' ');
+                    importance = dataSnapshot.child("importance").getValue(Boolean.class);
+                    createdAt = dataSnapshot.child("created_at").getValue(Date.class);
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
                 final Todo todo = new Todo(title, importance, createdAt);
                 itemListDatabaseReference = dataSnapshot.child("item_list").getRef();
                 itemListDatabaseReference.addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        String title = dataSnapshot.getKey().replace('_', ' ');
-                        boolean done = dataSnapshot.child("is_done").getValue(Boolean.class);
-                        Date createdAt = dataSnapshot.child("created_at").getValue(Date.class);
+                        String title = "";
+                        boolean done = false;
+                        Date createdAt = null;
+                        try {
+                            title = dataSnapshot.getKey().replace('_', ' ');
+                            done = dataSnapshot.child("is_done").getValue(Boolean.class);
+                            createdAt = dataSnapshot.child("created_at").getValue(Date.class);
+                        } catch (NullPointerException e) {
+                            e.printStackTrace();
+                        }
                         todo.addItem(new Item(title, done, createdAt));
                     }
 
@@ -133,6 +149,14 @@ public class Repository {
         itemListDatabaseReference = todoListDatabaseReference.child(todoList.get(todoIndex).getTitle().replace(' ', '_')).child("item_list").getRef();
         itemListDatabaseReference.child(item.getTitle().replace(' ', '_')).child("is_done").setValue(item.isDone());
         itemListDatabaseReference.child(item.getTitle().replace(' ', '_')).child("created_at").setValue(item.getCreatedAt());
+    }
+
+    private void relocateItems(String title, List<Item> itemList) {
+        itemListDatabaseReference = todoListDatabaseReference.child(title.replace(' ', '_')).child("item_list").getRef();
+        for (Item item : itemList) {
+            itemListDatabaseReference.child(item.getTitle().replace(' ', '_')).child("is_done").setValue(item.isDone());
+            itemListDatabaseReference.child(item.getTitle().replace(' ', '_')).child("created_at").setValue(item.getCreatedAt());
+        }
     }
 
     private void removeItem(int todoIndex, String title) {
