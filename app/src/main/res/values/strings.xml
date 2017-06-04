@@ -39,10 +39,13 @@
 
     <string name="view_todos">VIEW ALL TODOS</string>
     <string name="view_profile">VIEW PROFILE</string>
-    <string name="back_to_main">BACK TO MAIN MENU</string>
     <string name="new_todo">NEW TODO</string>
+    <string name="new_item">NEW ITEM</string>
     <string name="edit_todo">EDIT TODO</string>
+    <string name="edit_item">EDIT ITEM</string>
     <string name="confirm">CONFIRM</string>
     <string name="edit">EDIT</string>
     <string name="close">CLOSE</string>
+    <string name="back_to_main">BACK TO MAIN MENU</string>
+    <string name="back_to_todo_list">BACK TO TODO LIST</string>
 </resources>

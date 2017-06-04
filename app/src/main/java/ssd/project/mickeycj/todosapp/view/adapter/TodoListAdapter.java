@@ -13,6 +13,7 @@ import java.util.List;
 
 import ssd.project.mickeycj.todosapp.R;
 import ssd.project.mickeycj.todosapp.model.Todo;
+import ssd.project.mickeycj.todosapp.view.OnViewHolderClickListener;
 
 /**
  * Created by user on 4/6/60.
@@ -49,11 +50,18 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         Todo todo = todoList.get(position);
 
-        holder.layout.setBackgroundResource(R.drawable.bg_red);
-
         holder.titleTextView.setText((todo.isImportant()) ? todo.getTitle().toUpperCase() + "!" : todo.getTitle());
         holder.createdAtTextView.setText(new SimpleDateFormat("MMMM dd, yyyy").format(todo.getCreatedAt()));
-        holder.doneCountTextView.setText("None");
+
+        int numItems = todo.numItems();
+        if (numItems == 0) {
+            holder.doneCountTextView.setText("None");
+            holder.layout.setBackgroundResource(R.drawable.bg_red);
+        } else {
+            int progress = todo.getProgress();
+            holder.doneCountTextView.setText(progress + "/" + numItems);
+            holder.layout.setBackgroundResource((progress < numItems) ? R.drawable.bg_gray : R.drawable.bg_green);
+        }
     }
 
     @Override
@@ -74,10 +82,5 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.ViewHo
             createdAtTextView = (TextView) itemView.findViewById(R.id.textview_todo_created_at_viewholder);
             doneCountTextView = (TextView) itemView.findViewById(R.id.textview_todo_done_count_viewholder);
         }
-    }
-
-    public interface OnViewHolderClickListener {
-
-        void onItemClick(View view, int position);
     }
 }

@@ -15,6 +15,7 @@ import java.util.List;
 import ssd.project.mickeycj.todosapp.model.Repository;
 import ssd.project.mickeycj.todosapp.model.Todo;
 import ssd.project.mickeycj.todosapp.model.User;
+import ssd.project.mickeycj.todosapp.view.OnViewHolderClickListener;
 import ssd.project.mickeycj.todosapp.view.adapter.TodoListAdapter;
 import ssd.project.mickeycj.todosapp.view.dialog.OptionsDialog;
 
@@ -61,7 +62,7 @@ public class TodoListActivity extends AppCompatActivity {
         todoListRecyclerView.setAdapter(todoListAdapter);
     }
 
-    private TodoListAdapter.OnViewHolderClickListener onTodoClickListener = new TodoListAdapter.OnViewHolderClickListener() {
+    private OnViewHolderClickListener onTodoClickListener = new OnViewHolderClickListener() {
         @Override
         public void onItemClick(View view, final int position) {
             final OptionsDialog optionsDialog = new OptionsDialog(TodoListActivity.this);
