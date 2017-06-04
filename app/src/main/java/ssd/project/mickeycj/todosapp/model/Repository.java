@@ -36,6 +36,7 @@ public class Repository {
     public static void removeTodoFromCurrentTodoList(int index) { removeTodoFromCurrentTodoList(currentRepository.getTodo(index).getTitle()); }
 
     private DatabaseReference todoListDatabaseReference;
+    private DatabaseReference itemListDatabaseReference;
 
     private String currentUser;
 
@@ -51,9 +52,31 @@ public class Repository {
                 String title = dataSnapshot.getKey().replace('_', ' ');
                 boolean importance = dataSnapshot.child("importance").getValue(Boolean.class);
                 Date createdAt = dataSnapshot.child("created_at").getValue(Date.class);
-                final Todo todo = new Todo(title, importance, createdAt);
-                // TODO Get item list
+                Todo todo = new Todo(title, importance, createdAt);
+                final List<Item> itemList = new ArrayList<>();
+                itemListDatabaseReference = dataSnapshot.child("item_list").getRef();
+                itemListDatabaseReference.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        String title = dataSnapshot.getKey().replace('_', ' ');
+                        boolean done = dataSnapshot.child("is_done").getValue(Boolean.class);
+                        Date createdAt = dataSnapshot.child("created_at").getValue(Date.class);
+                        itemList.add(new Item(title, done, createdAt));
+                    }
 
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) { }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) { }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) { }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) { }
+                });
+                todo.setItemList(itemList);
                 todoList.add(todo);
             }
 
