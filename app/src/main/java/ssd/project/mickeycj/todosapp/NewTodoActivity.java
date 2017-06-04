@@ -9,7 +9,10 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import ssd.project.mickeycj.todosapp.model.Repository;
+import ssd.project.mickeycj.todosapp.model.Todo;
 import ssd.project.mickeycj.todosapp.model.User;
+import ssd.project.mickeycj.todosapp.view.dialog.AlertDialog;
 
 public class NewTodoActivity extends AppCompatActivity {
 
@@ -55,7 +58,22 @@ public class NewTodoActivity extends AppCompatActivity {
     private View.OnClickListener onConfirmClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            String title = getTodoTitleFromEditText();
+            boolean importance = getTodoImportanceFromCheckBox();
+            if (!title.equals("") && !title.contains(".") && !title.contains("#") && !title.contains("$") && !title.contains("[") && !title.contains("]")) {
+                Repository.addNewTodoToCurrentTodoList(new Todo(title, importance));
+                onBackPressed();
+            } else {
+                if (title.equals("")) {
+                    new AlertDialog(NewTodoActivity.this)
+                            .setAlertTitle(getString(R.string.uncompleted_form))
+                            .show();
+                } else {
+                    new AlertDialog(NewTodoActivity.this)
+                            .setAlertTitle(getString(R.string.invalid_characters))
+                            .show();
+                }
+            }
         }
     };
 
@@ -71,6 +89,10 @@ public class NewTodoActivity extends AppCompatActivity {
         finish();
         overridePendingTransition(enterAnim, exitAnim);
     }
+
+    private String getTodoTitleFromEditText() { return todoTitleEditText.getText().toString().trim(); }
+
+    private boolean getTodoImportanceFromCheckBox() { return todoImportanceCheckBox.isChecked(); }
 
     private void clearForm() {
         todoTitleEditText.setText("");

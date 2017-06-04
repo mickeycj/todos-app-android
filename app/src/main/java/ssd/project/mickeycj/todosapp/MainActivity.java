@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import ssd.project.mickeycj.todosapp.model.Repository;
 import ssd.project.mickeycj.todosapp.model.User;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        String email = User.getCurrentUser().getEmail();
+        Repository.getCurrentRepository(email.substring(0, email.indexOf('.')));
 
         handler = new Handler();
         runnable = new Runnable() {

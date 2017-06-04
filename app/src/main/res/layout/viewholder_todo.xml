@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_white"
     android:orientation="horizontal"
-    android:layout_marginBottom="15dp">
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp">
 
     <FrameLayout
         android:id="@+id/layout_todo_status"

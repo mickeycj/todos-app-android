@@ -17,6 +17,7 @@
     <string name="invalid_sign_in_detail_2">- Incorrect email or password</string>
     <string name="invalid_sign_up">INVALID SIGN-UP!</string>
     <string name="invalid_sign_up_detail">- This email may have already been taken</string>
+    <string name="invalid_characters">INVALID CHARACTERS</string>
     <string name="uncompleted_form">FORM NOT COMPLETED!</string>
     <string name="missing_username">- Username is missing</string>
     <string name="missing_email">- Email is missing</string>

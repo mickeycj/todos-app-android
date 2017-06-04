@@ -86,7 +86,8 @@
         android:layout_height="match_parent"
         android:layout_below="@id/layout_new_todo"
         android:layout_above="@+id/layout_back_from_todo_list"
-        android:layout_margin="10dp" >
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
     </android.support.v7.widget.RecyclerView>
 
     <LinearLayout

@@ -12,13 +12,15 @@ public class Todo {
     private boolean importance;
     private Date createdAt;
 
-    public Todo() {}
-
-    public Todo(String title, boolean importance) {
+    public Todo(String title, boolean importance, Date createdAt) {
         this.title = title;
         this.importance = importance;
-        this.createdAt = new Date();
+        this.createdAt = (createdAt != null) ? createdAt : new Date();
     }
+
+    public Todo(String title, boolean importance) { this(title, importance, null); }
+
+    public Todo() {}
 
     public String getTitle() { return title; }
 

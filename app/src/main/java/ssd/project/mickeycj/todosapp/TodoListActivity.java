@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import ssd.project.mickeycj.todosapp.model.Repository;
 import ssd.project.mickeycj.todosapp.model.Todo;
 import ssd.project.mickeycj.todosapp.model.User;
 import ssd.project.mickeycj.todosapp.view.adapter.TodoListAdapter;
@@ -30,19 +31,12 @@ public class TodoListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo_list);
-
         todoList = new ArrayList<>();
         todoListAdapter = new TodoListAdapter(todoList);
 
         initViewHolders();
 
-        // Mock-up list
-        if (!todoList.isEmpty()) {
-            todoList.clear();
-        }
-        todoList.add(new Todo("Todo #1", false));
-        todoList.add(new Todo("Todo #2", true));
-        todoListAdapter.notifyDataSetChanged();
+        updateTodoList();
     }
 
     private void initViewHolders() {
@@ -90,6 +84,14 @@ public class TodoListActivity extends AppCompatActivity {
         startActivity(new Intent(TodoListActivity.this, cls));
         finish();
         overridePendingTransition(enterAnim, exitAnim);
+    }
+
+    private void updateTodoList() {
+        if (!todoList.isEmpty()) {
+            todoList.clear();
+        }
+        todoList.addAll(Repository.getCurrentTodoList());
+        todoListAdapter.notifyDataSetChanged();
     }
 
     @Override
