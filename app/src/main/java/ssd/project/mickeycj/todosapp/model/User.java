@@ -26,8 +26,8 @@ import ssd.project.mickeycj.todosapp.view.dialog.AlertDialog;
 
 public class User extends Observable {
 
-    private static FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    private static DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users");
+    private static FirebaseAuth firebaseAuth;
+    private static DatabaseReference databaseReference;
 
     private static User currentUser;
 
@@ -38,10 +38,15 @@ public class User extends Observable {
         return currentUser;
     }
 
-    public static boolean isSignedIn() { return firebaseAuth.getCurrentUser() != null; }
+    public static boolean isSignedIn() {
+        firebaseAuth = FirebaseAuth.getInstance();
+        return firebaseAuth.getCurrentUser() != null;
+    }
 
     public static void signIn(final String email, String password, final SignInActivity signInActivity) {
         signInActivity.showProgressDialog();
+        firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("users");
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(signInActivity, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -86,6 +91,8 @@ public class User extends Observable {
 
     public static void signUp(final String username, final String email, String password, final SignUpActivity signUpActivity) {
         signUpActivity.showProgressDialog();
+        firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("users");
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(signUpActivity, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -106,6 +113,7 @@ public class User extends Observable {
     }
 
     public static void signOut() {
+        firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.signOut();
         if (currentUser != null) {
             currentUser.setUsername(null);
