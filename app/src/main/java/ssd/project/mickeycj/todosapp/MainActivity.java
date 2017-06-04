@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import ssd.project.mickeycj.todosapp.models.User;
+import ssd.project.mickeycj.todosapp.model.User;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -68,16 +68,14 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener onViewTodosClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            startActivity(TodoListActivity.class);
         }
     };
 
     private View.OnClickListener onViewProfileClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            startActivity(new Intent(MainActivity.this, ProfileActivity.class));
-            finish();
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            startActivity(ProfileActivity.class);
         }
     };
 
@@ -87,6 +85,12 @@ public class MainActivity extends AppCompatActivity {
             onBackPressed();
         }
     };
+
+    private void startActivity(Class<?> cls) {
+        startActivity(new Intent(MainActivity.this, cls));
+        finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
 
     @Override
     public void onPause() {

@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 
-import ssd.project.mickeycj.todosapp.models.User;
+import ssd.project.mickeycj.todosapp.model.User;
 
 public class ProfileActivity extends AppCompatActivity {
 

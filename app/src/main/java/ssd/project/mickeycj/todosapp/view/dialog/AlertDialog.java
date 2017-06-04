@@ -1,4 +1,4 @@
-package ssd.project.mickeycj.todosapp.views.dialog;
+package ssd.project.mickeycj.todosapp.view.dialog;
 
 import android.app.Dialog;
 import android.content.Context;

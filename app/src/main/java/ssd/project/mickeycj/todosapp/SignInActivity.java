@@ -14,8 +14,8 @@ import android.widget.TextView;
 import java.util.Observable;
 import java.util.Observer;
 
-import ssd.project.mickeycj.todosapp.models.User;
-import ssd.project.mickeycj.todosapp.views.dialog.AlertDialog;
+import ssd.project.mickeycj.todosapp.model.User;
+import ssd.project.mickeycj.todosapp.view.dialog.AlertDialog;
 
 public class SignInActivity extends AppCompatActivity implements Observer {
 
@@ -70,11 +70,15 @@ public class SignInActivity extends AppCompatActivity implements Observer {
     private View.OnClickListener onSignUpClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
-            finish();
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            startActivity(SignUpActivity.class);
         }
     };
+
+    private void startActivity(Class<?> cls) {
+        startActivity(new Intent(SignInActivity.this, cls));
+        finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
 
     private void signIn() {
         email = getEmailFromEditText();
@@ -131,9 +135,5 @@ public class SignInActivity extends AppCompatActivity implements Observer {
     public void dismissProgressDialog() { progressDialog.dismiss(); }
 
     @Override
-    public void update(Observable o, Object arg) {
-        startActivity(new Intent(SignInActivity.this, MainActivity.class));
-        finish();
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-    }
+    public void update(Observable o, Object arg) { startActivity(MainActivity.class); }
 }

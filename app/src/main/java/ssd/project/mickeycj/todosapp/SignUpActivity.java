@@ -11,8 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import ssd.project.mickeycj.todosapp.models.User;
-import ssd.project.mickeycj.todosapp.views.dialog.AlertDialog;
+import ssd.project.mickeycj.todosapp.model.User;
+import ssd.project.mickeycj.todosapp.view.dialog.AlertDialog;
 
 public class SignUpActivity extends AppCompatActivity {
 

@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import ssd.project.mickeycj.todosapp.models.User;
+import ssd.project.mickeycj.todosapp.model.User;
 
 public class LoadingActivity extends AppCompatActivity {
 
