@@ -23,6 +23,8 @@ public class HelpDialog extends Dialog {
         super(context);
 
         initViewHolders();
+
+        setCanceledOnTouchOutside(false);
     }
 
     private void initViewHolders() {

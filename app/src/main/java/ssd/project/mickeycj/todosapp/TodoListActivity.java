@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import ssd.project.mickeycj.todosapp.model.Repository;
@@ -142,12 +141,6 @@ public class TodoListActivity extends AppCompatActivity {
             todoList.clear();
         }
         todoList.addAll(Repository.getCurrentTodoList());
-        todoList.sort(new Comparator<Todo>() {
-            @Override
-            public int compare(Todo todo1, Todo todo2) {
-                return todo1.getCreatedAt().compareTo(todo2.getCreatedAt());
-            }
-        });
         todoListAdapter.notifyDataSetChanged();
     }
 

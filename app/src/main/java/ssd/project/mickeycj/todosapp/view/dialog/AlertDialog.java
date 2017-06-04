@@ -23,6 +23,8 @@ public class AlertDialog extends Dialog {
         super(context);
 
         initViewHolders();
+
+        setCanceledOnTouchOutside(false);
     }
 
     private void initViewHolders() {

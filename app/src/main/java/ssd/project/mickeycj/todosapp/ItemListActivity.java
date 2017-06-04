@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import ssd.project.mickeycj.todosapp.model.Item;
@@ -71,7 +70,7 @@ public class ItemListActivity extends AppCompatActivity {
             View.OnClickListener onMarkItemClickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Repository.setItemDoneFromCurrentItemlistInCurrentTodo(todoIndex, position, !item.isDone());
+                    Repository.setItemDoneFromCurrentItemListInCurrentTodo(todoIndex, position, !item.isDone());
                     updateItemList();
                     optionsDialog.dismiss();
                 }
@@ -90,7 +89,7 @@ public class ItemListActivity extends AppCompatActivity {
             View.OnClickListener onDeleteItemClickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Repository.removeItemFromCurrentItemLsitInCurrentTodo(todoIndex, position);
+                    Repository.removeItemFromCurrentItemListInCurrentTodo(todoIndex, position);
                     updateItemList();
                     optionsDialog.dismiss();
                 }
@@ -142,12 +141,6 @@ public class ItemListActivity extends AppCompatActivity {
             itemList.clear();
         }
         itemList.addAll(Repository.getCurrentItemListFromCurrentTodo(todoIndex));
-        itemList.sort(new Comparator<Item>() {
-            @Override
-            public int compare(Item item1, Item item2) {
-                return item1.getCreatedAt().compareTo(item2.getCreatedAt());
-            }
-        });
         itemListAdapter.notifyDataSetChanged();
     }
 

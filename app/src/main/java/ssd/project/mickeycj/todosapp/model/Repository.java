@@ -45,9 +45,9 @@ public class Repository {
 
     public static void removeItemFromCurrentItemListInCurrentTodo(int todoIndex, String title) { currentRepository.removeItem(todoIndex, title); }
 
-    public static void removeItemFromCurrentItemLsitInCurrentTodo(int todoIndex, int itemIndex) { removeItemFromCurrentItemListInCurrentTodo(todoIndex, currentRepository.getItemFrom(todoIndex, itemIndex).getTitle()); }
+    public static void removeItemFromCurrentItemListInCurrentTodo(int todoIndex, int itemIndex) { removeItemFromCurrentItemListInCurrentTodo(todoIndex, currentRepository.getItemFrom(todoIndex, itemIndex).getTitle()); }
 
-    public static void setItemDoneFromCurrentItemlistInCurrentTodo(int todoIndex, int itemIndex, boolean done) { currentRepository.setItemDone(todoIndex, itemIndex, done); }
+    public static void setItemDoneFromCurrentItemListInCurrentTodo(int todoIndex, int itemIndex, boolean done) { currentRepository.setItemDone(todoIndex, itemIndex, done); }
 
     private DatabaseReference todoListDatabaseReference;
     private DatabaseReference itemListDatabaseReference;
