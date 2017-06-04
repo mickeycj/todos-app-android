@@ -27,6 +27,11 @@
     <string name="wrong_confirmation">WRONG PASSWORD CONFIRMATION!</string>
     <string name="wrong_confirmation_detail">- Password confirmation mismatch</string>
 
+    <string name="options_title">%1$s OPTIONS</string>
+    <string name="option_show_items">SHOW ITEM LIST</string>
+    <string name="option_edit_todo">EDIT TODO DETAILS</string>
+    <string name="option_delete_todo">DELETE TODO</string>
+
     <string name="sign_in">SIGN IN</string>
     <string name="sign_up">SIGN UP</string>
     <string name="sign_up_now">SIGN UP NOW!</string>

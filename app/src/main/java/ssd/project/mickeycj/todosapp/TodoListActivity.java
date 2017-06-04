@@ -16,6 +16,7 @@ import ssd.project.mickeycj.todosapp.model.Repository;
 import ssd.project.mickeycj.todosapp.model.Todo;
 import ssd.project.mickeycj.todosapp.model.User;
 import ssd.project.mickeycj.todosapp.view.adapter.TodoListAdapter;
+import ssd.project.mickeycj.todosapp.view.dialog.OptionsDialog;
 
 public class TodoListActivity extends AppCompatActivity {
 
@@ -31,8 +32,9 @@ public class TodoListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo_list);
+
         todoList = new ArrayList<>();
-        todoListAdapter = new TodoListAdapter(todoList);
+        todoListAdapter = new TodoListAdapter(todoList, onTodoClickListener);
 
         initViewHolders();
 
@@ -58,6 +60,45 @@ public class TodoListActivity extends AppCompatActivity {
         todoListRecyclerView.setHasFixedSize(true);
         todoListRecyclerView.setAdapter(todoListAdapter);
     }
+
+    private TodoListAdapter.OnViewHolderClickListener onTodoClickListener = new TodoListAdapter.OnViewHolderClickListener() {
+        @Override
+        public void onItemClick(View view, final int position) {
+            final OptionsDialog optionsDialog = new OptionsDialog(TodoListActivity.this);
+            View.OnClickListener onShowItemListClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            };
+
+            View.OnClickListener onEditTodoClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(TodoListActivity.this, EditTodoActivity.class);
+                    intent.putExtra("todoIndex", position);
+                    startActivity(intent);
+                    finish();
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+            };
+
+            View.OnClickListener onDeleteTodoClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Repository.removeTodoFromCurrentTodoList(position);
+                    updateTodoList();
+                    optionsDialog.dismiss();
+                }
+            };
+            optionsDialog
+                    .setOptionsTitle(String.format(getString(R.string.options_title), "TODO"))
+                    .setFirstOptionButton(getString(R.string.option_show_items), onShowItemListClickListener)
+                    .setSecondOptionButton(getString(R.string.option_edit_todo), onEditTodoClickListener)
+                    .setThirdOptionButton(getString(R.string.option_delete_todo), onDeleteTodoClickListener)
+                    .show();
+        }
+    };
 
     private View.OnClickListener onHelpClickListener = new View.OnClickListener() {
         @Override

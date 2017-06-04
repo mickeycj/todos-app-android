@@ -103,7 +103,7 @@ public class EditTodoActivity extends AppCompatActivity {
         String title = getTodoTitleFromEditText();
         boolean importance = getTodoImportanceFromCheckBox();
         if (!title.equals("") && !title.contains(".") && !title.contains("#") && !title.contains("$") && !title.contains("[") && !title.contains("]")) {
-            if (!todoTitle.equals(title)) {
+            if (!todoTitle.equals(title) || todoImportance != importance) {
                 Repository.removeTodoFromCurrentTodoList(todoTitle);
             }
             Repository.addNewTodoToCurrentTodoList(new Todo(title, importance, todoCreatedAt));

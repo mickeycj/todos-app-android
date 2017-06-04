@@ -24,12 +24,25 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.ViewHo
 
     private List<Todo> todoList;
 
-    public TodoListAdapter(List<Todo> todoList) { this.todoList = todoList; }
+    private OnViewHolderClickListener onViewHolderClickListener;
+
+    public TodoListAdapter(List<Todo> todoList, OnViewHolderClickListener onViewHolderClickListener) {
+        this.todoList = todoList;
+        this.onViewHolderClickListener = onViewHolderClickListener;
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.viewholder_todo, parent, false));
+        View view = LayoutInflater.from(context).inflate(R.layout.viewholder_todo, parent, false);
+        final ViewHolder viewHolder = new ViewHolder(view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onViewHolderClickListener.onItemClick(v, viewHolder.getAdapterPosition());
+            }
+        });
+        return viewHolder;
     }
 
     @Override
@@ -61,5 +74,10 @@ public class TodoListAdapter extends RecyclerView.Adapter<TodoListAdapter.ViewHo
             createdAtTextView = (TextView) itemView.findViewById(R.id.textview_todo_created_at_viewholder);
             doneCountTextView = (TextView) itemView.findViewById(R.id.textview_todo_done_count_viewholder);
         }
+    }
+
+    public interface OnViewHolderClickListener {
+
+        void onItemClick(View view, int position);
     }
 }

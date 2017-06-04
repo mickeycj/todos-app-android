@@ -33,6 +33,8 @@ public class Repository {
 
     public static void removeTodoFromCurrentTodoList(String title) { currentRepository.removeTodo(title); }
 
+    public static void removeTodoFromCurrentTodoList(int index) { removeTodoFromCurrentTodoList(currentRepository.getTodo(index).getTitle()); }
+
     private DatabaseReference todoListDatabaseReference;
 
     private String currentUser;
@@ -81,6 +83,12 @@ public class Repository {
     }
 
     private void removeTodo(String title) {
+        for (Todo todo : todoList) {
+            if (todo.getTitle().equals(title)) {
+                todoList.remove(todo);
+                break;
+            }
+        }
         todoListDatabaseReference.child(title.replace(' ', '_')).setValue(null);
     }
 }
