@@ -15,13 +15,14 @@ import ssd.project.mickeycj.todosapp.model.Repository;
 import ssd.project.mickeycj.todosapp.model.Todo;
 import ssd.project.mickeycj.todosapp.model.User;
 import ssd.project.mickeycj.todosapp.view.dialog.AlertDialog;
+import ssd.project.mickeycj.todosapp.view.dialog.HelpDialog;
 
 public class NewTodoActivity extends AppCompatActivity {
 
     private TextView usernameAppBarTextView, ownerTextView;
     private EditText todoTitleEditText;
     private CheckBox todoImportanceCheckBox;
-    private Button helpButton, confirmButton, cancelButton;
+    private Button confirmButton, cancelButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +44,6 @@ public class NewTodoActivity extends AppCompatActivity {
         todoImportanceCheckBox = (CheckBox) findViewById(R.id.checkbox_new_todo_importance);
         clearForm();
 
-        helpButton = (Button) findViewById(R.id.button_help_new_todo);
-        helpButton.setOnClickListener(onHelpClickListener);
         confirmButton = (Button) findViewById(R.id.button_confirm_new_todo);
         confirmButton.setOnClickListener(onConfirmClickListener);
         cancelButton = (Button) findViewById(R.id.button_cancel_new_todo);
@@ -61,12 +60,12 @@ public class NewTodoActivity extends AppCompatActivity {
         }
     };
 
-    private View.OnClickListener onHelpClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-        }
-    };
+    public void onHelpClick(View view) {
+        new HelpDialog(NewTodoActivity.this)
+                .setHelpTitle(getString(R.string.help_title_new_todo))
+                .setFirstHelpContent(getString(R.string.help_detail_new_todo))
+                .show();
+    }
 
     private View.OnClickListener onConfirmClickListener = new View.OnClickListener() {
         @Override

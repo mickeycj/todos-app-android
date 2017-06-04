@@ -18,6 +18,7 @@ import ssd.project.mickeycj.todosapp.model.Repository;
 import ssd.project.mickeycj.todosapp.model.User;
 import ssd.project.mickeycj.todosapp.view.OnViewHolderClickListener;
 import ssd.project.mickeycj.todosapp.view.adapter.ItemListAdapter;
+import ssd.project.mickeycj.todosapp.view.dialog.HelpDialog;
 import ssd.project.mickeycj.todosapp.view.dialog.OptionsDialog;
 
 public class ItemListActivity extends AppCompatActivity {
@@ -26,7 +27,7 @@ public class ItemListActivity extends AppCompatActivity {
     private List<Item> itemList;
 
     private TextView usernameAppBarTextView, ownerTextView;
-    private Button helpButton, newItemButton, backButton;
+    private Button newItemButton, backButton;
 
     private RecyclerView itemListRecyclerView;
     private RecyclerView.Adapter itemListAdapter;
@@ -51,8 +52,6 @@ public class ItemListActivity extends AppCompatActivity {
         ownerTextView = (TextView) findViewById(R.id.textview_item_list_owner);
         ownerTextView.setText(String.format(getString(R.string.item_list_owner), Repository.getTodoFromCurrentTodoList(todoIndex).getTitle()));
 
-        helpButton = (Button) findViewById(R.id.button_help_item_list);
-        helpButton.setOnClickListener(onHelpClickListener);
         newItemButton = (Button) findViewById(R.id.button_new_item);
         newItemButton.setOnClickListener(onNewItemClickListener);
         backButton = (Button) findViewById(R.id.button_back_from_item_list);
@@ -105,12 +104,14 @@ public class ItemListActivity extends AppCompatActivity {
         }
     };
 
-    private View.OnClickListener onHelpClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-        }
-    };
+    public void onHelpClick(View view) {
+        new HelpDialog(ItemListActivity.this)
+                .setHelpTitle(getString(R.string.help_title_item_list))
+                .setFirstHelpContent(getString(R.string.help_detail_item_list))
+                .setSecondHelpContent(getString(R.string.help_detail_item_status_green))
+                .setThirdHelpContent(getString(R.string.help_detail_item_status_red))
+                .show();
+    }
 
     private View.OnClickListener onNewItemClickListener = new View.OnClickListener() {
         @Override

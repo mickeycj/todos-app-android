@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import ssd.project.mickeycj.todosapp.model.Repository;
 import ssd.project.mickeycj.todosapp.model.User;
+import ssd.project.mickeycj.todosapp.view.dialog.HelpDialog;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private long delayTime, time = 1500L;
 
     private TextView usernameAppBarTextView;
-    private Button helpButton, viewTodosButtons, viewProfileButton, signOutButton;
+    private Button viewTodosButtons, viewProfileButton, signOutButton;
     private ProgressDialog progressDialog;
 
     @Override
@@ -47,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
         usernameAppBarTextView = (TextView) findViewById(R.id.textview_username_main);
         usernameAppBarTextView.setText(User.getCurrentUser().getUsername());
 
-        helpButton = (Button) findViewById(R.id.button_help_main);
-        helpButton.setOnClickListener(onHelpClickListener);
         viewTodosButtons = (Button) findViewById(R.id.button_view_todos);
         viewTodosButtons.setOnClickListener(onViewTodosClickListener);
         viewProfileButton = (Button) findViewById(R.id.button_view_profile);
@@ -60,12 +59,12 @@ public class MainActivity extends AppCompatActivity {
         progressDialog.setMessage("Signing out...");
     }
 
-    private View.OnClickListener onHelpClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-        }
-    };
+    public void onHelpClick(View view) {
+        new HelpDialog(MainActivity.this)
+                .setHelpTitle(getString(R.string.help_title_main))
+                .setFirstHelpContent(getString(R.string.help_detail_main))
+                .show();
+    }
 
     private View.OnClickListener onViewTodosClickListener = new View.OnClickListener() {
         @Override

@@ -16,6 +16,7 @@ import ssd.project.mickeycj.todosapp.model.Item;
 import ssd.project.mickeycj.todosapp.model.Repository;
 import ssd.project.mickeycj.todosapp.model.User;
 import ssd.project.mickeycj.todosapp.view.dialog.AlertDialog;
+import ssd.project.mickeycj.todosapp.view.dialog.HelpDialog;
 
 public class EditItemActivity extends AppCompatActivity {
 
@@ -26,7 +27,7 @@ public class EditItemActivity extends AppCompatActivity {
 
     private TextView usernameAppBarTextView, ownerTextView;
     private EditText itemTitleEditText;
-    private Button helpButton, editButton, cancelButton;
+    private Button editButton, cancelButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +53,6 @@ public class EditItemActivity extends AppCompatActivity {
         itemTitleEditText.setOnEditorActionListener(onActionDoneListener);
         itemTitleEditText.setText(itemTitle);
 
-        helpButton = (Button) findViewById(R.id.button_help_edit_item);
-        helpButton.setOnClickListener(onHelpClickListener);
         editButton = (Button) findViewById(R.id.button_confirm_edit_item);
         editButton.setOnClickListener(onEditClickListener);
         cancelButton = (Button) findViewById(R.id.button_cancel_edit_item);
@@ -70,12 +69,12 @@ public class EditItemActivity extends AppCompatActivity {
         }
     };
 
-    private View.OnClickListener onHelpClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-        }
-    };
+    public void onHelpClick(View view) {
+        new HelpDialog(EditItemActivity.this)
+                .setHelpTitle(getString(R.string.help_title_edit_item))
+                .setFirstHelpContent(getString(R.string.help_detail_edit_item))
+                .show();
+    }
 
     private View.OnClickListener onEditClickListener = new View.OnClickListener() {
         @Override

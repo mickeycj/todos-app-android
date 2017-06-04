@@ -10,11 +10,12 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 
 import ssd.project.mickeycj.todosapp.model.User;
+import ssd.project.mickeycj.todosapp.view.dialog.HelpDialog;
 
 public class ProfileActivity extends AppCompatActivity {
 
     private TextView usernameAppBarTextView, usernameDetailTextView, emailDetailTextView, joinedAtDetailTextView;
-    private Button helpButton, backButton;
+    private Button backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,18 +36,16 @@ public class ProfileActivity extends AppCompatActivity {
         joinedAtDetailTextView = (TextView) findViewById(R.id.textview_detail_joined_at);
         joinedAtDetailTextView.setText(new SimpleDateFormat("MMMM dd, yyyy").format(currentUser.getJoinedAt()));
 
-        helpButton = (Button) findViewById(R.id.button_help_profile);
-        helpButton.setOnClickListener(onHelpClickListener);
         backButton = (Button) findViewById(R.id.button_back_from_profile);
         backButton.setOnClickListener(onBackClickListener);
     }
 
-    private View.OnClickListener onHelpClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-        }
-    };
+    public void onHelpClick(View view) {
+        new HelpDialog(ProfileActivity.this)
+                .setHelpTitle(getString(R.string.help_title_profile))
+                .setFirstHelpContent(getString(R.string.help_detail_profile))
+                .show();
+    }
 
     private View.OnClickListener onBackClickListener = new View.OnClickListener() {
         @Override

@@ -18,6 +18,7 @@ import ssd.project.mickeycj.todosapp.model.Todo;
 import ssd.project.mickeycj.todosapp.model.User;
 import ssd.project.mickeycj.todosapp.view.OnViewHolderClickListener;
 import ssd.project.mickeycj.todosapp.view.adapter.TodoListAdapter;
+import ssd.project.mickeycj.todosapp.view.dialog.HelpDialog;
 import ssd.project.mickeycj.todosapp.view.dialog.OptionsDialog;
 
 public class TodoListActivity extends AppCompatActivity {
@@ -25,7 +26,7 @@ public class TodoListActivity extends AppCompatActivity {
     private List<Todo> todoList;
 
     private TextView usernameAppBarTextView, ownerTextView;
-    private Button helpButton, newTodoButton, backButton;
+    private Button newTodoButton, backButton;
 
     private RecyclerView todoListRecyclerView;
     private RecyclerView.Adapter todoListAdapter;
@@ -50,8 +51,6 @@ public class TodoListActivity extends AppCompatActivity {
         ownerTextView = (TextView) findViewById(R.id.textview_todo_list_owner);
         ownerTextView.setText(String.format(getString(R.string.todo_list_owner), username));
 
-        helpButton = (Button) findViewById(R.id.button_help_todo_list);
-        helpButton.setOnClickListener(onHelpClickListener);
         newTodoButton = (Button) findViewById(R.id.button_new_todo);
         newTodoButton.setOnClickListener(onNewTodoClickListener);
         backButton = (Button) findViewById(R.id.button_back_from_todo_list);
@@ -108,12 +107,15 @@ public class TodoListActivity extends AppCompatActivity {
         }
     };
 
-    private View.OnClickListener onHelpClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-        }
-    };
+    public void onHelpClick(View view) {
+        new HelpDialog(TodoListActivity.this)
+                .setHelpTitle(getString(R.string.help_title_todo_list))
+                .setFirstHelpContent(getString(R.string.help_detail_todo_list))
+                .setSecondHelpContent(getString(R.string.help_detail_todo_status_green))
+                .setThirdHelpContent(getString(R.string.help_detail_todo_status_red))
+                .setFourthHelpContent(getString(R.string.help_detail_todo_status_gray))
+                .show();
+    }
 
     private View.OnClickListener onNewTodoClickListener = new View.OnClickListener() {
         @Override

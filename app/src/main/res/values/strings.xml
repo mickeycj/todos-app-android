@@ -29,6 +29,28 @@
     <string name="wrong_confirmation">WRONG PASSWORD CONFIRMATION!</string>
     <string name="wrong_confirmation_detail">- Password confirmation mismatch</string>
 
+    <string name="help_title_main">MAIN MENU</string>
+    <string name="help_detail_main">You can choose to view your todo list, your profile, or sign out here</string>
+    <string name="help_title_profile">PROFILE</string>
+    <string name="help_detail_profile">This is your profile details, including your username, email, and joined date</string>
+    <string name="help_title_todo_list">TODO LIST</string>
+    <string name="help_detail_todo_list">You can add new todo, or view each todo\'s item list here</string>
+    <string name="help_detail_todo_status_green">ALL DONE</string>
+    <string name="help_detail_todo_status_red">NO ITEM</string>
+    <string name="help_detail_todo_status_gray">NOT DONE</string>
+    <string name="help_title_new_todo">NEW TODO</string>
+    <string name="help_detail_new_todo">You can add new todo here</string>
+    <string name="help_title_edit_todo">EDIT TODO</string>
+    <string name="help_detail_edit_todo">You can edit current todo here</string>
+    <string name="help_title_item_list">ITEM LIST</string>
+    <string name="help_detail_item_list">You can add new item, or manage items in the list here</string>
+    <string name="help_detail_item_status_green">DONE</string>
+    <string name="help_detail_item_status_red">NOT DONE</string>
+    <string name="help_title_new_item">NEW ITEM</string>
+    <string name="help_detail_new_item">You can add new item here</string>
+    <string name="help_title_edit_item">EDIT ITEM</string>
+    <string name="help_detail_edit_item">You can edit current item here</string>
+
     <string name="options_title">%1$s OPTIONS</string>
     <string name="option_show_items">SHOW ITEM LIST</string>
     <string name="option_edit_todo">EDIT TODO DETAILS</string>
