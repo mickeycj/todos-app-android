@@ -32,9 +32,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 User.signOut();
                 progressDialog.dismiss();
-                startActivity(new Intent(MainActivity.this, SignInActivity.class));
-                finish();
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                startActivity(SignInActivity.class, R.anim.slide_in_left, R.anim.slide_out_right);
             }
         };
 
@@ -68,14 +66,14 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener onViewTodosClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            startActivity(TodoListActivity.class);
+            startActivity(TodoListActivity.class, R.anim.slide_in_right, R.anim.slide_out_left);
         }
     };
 
     private View.OnClickListener onViewProfileClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            startActivity(ProfileActivity.class);
+            startActivity(ProfileActivity.class, R.anim.slide_in_right, R.anim.slide_out_left);
         }
     };
 
@@ -86,10 +84,10 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private void startActivity(Class<?> cls) {
+    private void startActivity(Class<?> cls, int enterAnim, int exitAnim) {
         startActivity(new Intent(MainActivity.this, cls));
         finish();
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        overridePendingTransition(enterAnim, exitAnim);
     }
 
     @Override

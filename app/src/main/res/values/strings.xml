@@ -9,6 +9,8 @@
     <string name="email_title">EMAIL :</string>
     <string name="joined_at_title">JOINED :</string>
     <string name="todo_list_owner">%1$s\'s Todo List</string>
+    <string name="todo_title">TODO TITLE</string>
+    <string name="importance">IS THIS IMPORTANT?</string>
 
     <string name="invalid_sign_in">INVALID SIGN-IN!</string>
     <string name="invalid_sign_in_detail_1">- This account does not exist</string>
@@ -32,5 +34,6 @@
     <string name="view_profile">VIEW PROFILE</string>
     <string name="back_to_main">BACK TO MAIN MENU</string>
     <string name="new_todo">NEW TODO</string>
+    <string name="confirm">CONFIRM</string>
     <string name="close">CLOSE</string>
 </resources>

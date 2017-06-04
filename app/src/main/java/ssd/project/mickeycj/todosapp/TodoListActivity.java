@@ -75,7 +75,7 @@ public class TodoListActivity extends AppCompatActivity {
     private View.OnClickListener onNewTodoClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            startActivity(NewTodoActivity.class, R.anim.slide_in_right, R.anim.slide_out_left);
         }
     };
 
@@ -86,12 +86,12 @@ public class TodoListActivity extends AppCompatActivity {
         }
     };
 
-    private void startActivity(Class<?> cls) {
+    private void startActivity(Class<?> cls, int enterAnim, int exitAnim) {
         startActivity(new Intent(TodoListActivity.this, cls));
         finish();
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        overridePendingTransition(enterAnim, exitAnim);
     }
 
     @Override
-    public void onBackPressed() { startActivity(MainActivity.class); }
+    public void onBackPressed() { startActivity(MainActivity.class, R.anim.slide_in_left, R.anim.slide_out_right); }
 }
