@@ -27,7 +27,11 @@ public class Repository {
 
     public static List<Todo> getCurrentTodoList() { return currentRepository.getTodoList(); }
 
+    public static Todo getTodoFromCurrentTodoList(int index) { return currentRepository.getTodo(index); }
+
     public static void addNewTodoToCurrentTodoList(Todo todo) { currentRepository.addNewTodo(todo); }
+
+    public static void removeTodoFromCurrentTodoList(String title) { currentRepository.removeTodo(title); }
 
     private DatabaseReference todoListDatabaseReference;
 
@@ -69,8 +73,14 @@ public class Repository {
 
     private List<Todo> getTodoList() { return todoList; }
 
+    private Todo getTodo(int index) { return todoList.get(index); }
+
     private void addNewTodo(Todo todo) {
         todoListDatabaseReference.child(todo.getTitle().replace(' ', '_')).child("importance").setValue(todo.isImportant());
         todoListDatabaseReference.child(todo.getTitle().replace(' ', '_')).child("created_at").setValue(todo.getCreatedAt());
+    }
+
+    private void removeTodo(String title) {
+        todoListDatabaseReference.child(title.replace(' ', '_')).setValue(null);
     }
 }

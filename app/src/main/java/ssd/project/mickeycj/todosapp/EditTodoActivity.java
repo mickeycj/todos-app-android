@@ -11,43 +11,54 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.Date;
+
 import ssd.project.mickeycj.todosapp.model.Repository;
 import ssd.project.mickeycj.todosapp.model.Todo;
 import ssd.project.mickeycj.todosapp.model.User;
 import ssd.project.mickeycj.todosapp.view.dialog.AlertDialog;
 
-public class NewTodoActivity extends AppCompatActivity {
+public class EditTodoActivity extends AppCompatActivity {
+
+    private String todoTitle;
+    private boolean todoImportance;
+    private Date todoCreatedAt;
 
     private TextView usernameAppBarTextView, ownerTextView;
     private EditText todoTitleEditText;
     private CheckBox todoImportanceCheckBox;
-    private Button helpButton, confirmButton, cancelButton;
+    private Button helpButton, editButton, cancelButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_todo);
+        setContentView(R.layout.activity_edit_todo);
+
+        Todo todo = Repository.getTodoFromCurrentTodoList(getIntent().getIntExtra("todoIndex", 0));
+        todoTitle = todo.getTitle();
+        todoImportance = todo.isImportant();
+        todoCreatedAt = todo.getCreatedAt();
 
         initViewHolders();
     }
 
     private void initViewHolders() {
         String username = User.getCurrentUser().getUsername();
-        usernameAppBarTextView = (TextView) findViewById(R.id.textview_username_new_todo);
+        usernameAppBarTextView = (TextView) findViewById(R.id.textview_username_edit_todo);
         usernameAppBarTextView.setText(username);
-        ownerTextView = (TextView) findViewById(R.id.textview_new_todo_owner);
+        ownerTextView = (TextView) findViewById(R.id.textview_edit_todo_owner);
         ownerTextView.setText(String.format(getString(R.string.todo_list_owner), username));
 
-        todoTitleEditText = (EditText) findViewById(R.id.edittext_new_todo_title);
+        todoTitleEditText = (EditText) findViewById(R.id.edittext_edit_todo_title);
         todoTitleEditText.setOnEditorActionListener(onActionDoneListener);
-        todoImportanceCheckBox = (CheckBox) findViewById(R.id.checkbox_new_todo_importance);
-        clearForm();
+        todoImportanceCheckBox = (CheckBox) findViewById(R.id.checkbox_edit_todo_importance);
+        resetForm();
 
-        helpButton = (Button) findViewById(R.id.button_help_new_todo);
+        helpButton = (Button) findViewById(R.id.button_help_edit_todo);
         helpButton.setOnClickListener(onHelpClickListener);
-        confirmButton = (Button) findViewById(R.id.button_confirm_new_todo);
-        confirmButton.setOnClickListener(onConfirmClickListener);
-        cancelButton = (Button) findViewById(R.id.button_cancel_new_todo);
+        editButton = (Button) findViewById(R.id.button_confirm_edit_todo);
+        editButton.setOnClickListener(onEditClickListener);
+        cancelButton = (Button) findViewById(R.id.button_cancel_edit_todo);
         cancelButton.setOnClickListener(onCancelClickListener);
     }
 
@@ -55,7 +66,7 @@ public class NewTodoActivity extends AppCompatActivity {
         @Override
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                addNewTodo();
+                editTodo();
             }
             return false;
         }
@@ -68,10 +79,10 @@ public class NewTodoActivity extends AppCompatActivity {
         }
     };
 
-    private View.OnClickListener onConfirmClickListener = new View.OnClickListener() {
+    private View.OnClickListener onEditClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            addNewTodo();
+            editTodo();
         }
     };
 
@@ -83,24 +94,27 @@ public class NewTodoActivity extends AppCompatActivity {
     };
 
     private void startActivity(Class<?> cls, int enterAnim, int exitAnim) {
-        startActivity(new Intent(NewTodoActivity.this, cls));
+        startActivity(new Intent(EditTodoActivity.this, cls));
         finish();
         overridePendingTransition(enterAnim, exitAnim);
     }
 
-    private void addNewTodo() {
+    private void editTodo() {
         String title = getTodoTitleFromEditText();
         boolean importance = getTodoImportanceFromCheckBox();
         if (!title.equals("") && !title.contains(".") && !title.contains("#") && !title.contains("$") && !title.contains("[") && !title.contains("]")) {
-            Repository.addNewTodoToCurrentTodoList(new Todo(title, importance));
+            if (!todoTitle.equals(title)) {
+                Repository.removeTodoFromCurrentTodoList(todoTitle);
+            }
+            Repository.addNewTodoToCurrentTodoList(new Todo(title, importance, todoCreatedAt));
             onBackPressed();
         } else {
             if (title.equals("")) {
-                new AlertDialog(NewTodoActivity.this)
+                new AlertDialog(EditTodoActivity.this)
                         .setAlertTitle(getString(R.string.uncompleted_form))
                         .show();
             } else {
-                new AlertDialog(NewTodoActivity.this)
+                new AlertDialog(EditTodoActivity.this)
                         .setAlertTitle(getString(R.string.invalid_characters))
                         .setAlertContent(getString(R.string.invalid_characters_details))
                         .show();
@@ -112,9 +126,9 @@ public class NewTodoActivity extends AppCompatActivity {
 
     private boolean getTodoImportanceFromCheckBox() { return todoImportanceCheckBox.isChecked(); }
 
-    private void clearForm() {
-        todoTitleEditText.setText("");
-        todoImportanceCheckBox.setChecked(false);
+    private void resetForm() {
+        todoTitleEditText.setText(todoTitle);
+        todoImportanceCheckBox.setChecked(todoImportance);
     }
 
     @Override

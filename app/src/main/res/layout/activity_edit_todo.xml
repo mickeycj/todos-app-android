@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/activity_new_todo"
+    android:id="@+id/activity_edit_todo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/bg_black">
 
     <RelativeLayout
-        android:id="@+id/layout_app_bar_new_todo"
+        android:id="@+id/layout_app_bar_edit_todo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -15,7 +15,7 @@
         android:background="@drawable/bg_green">
 
         <TextView
-            android:id="@+id/textview_username_new_todo"
+            android:id="@+id/textview_username_edit_todo"
             android:text="@string/username"
             android:textSize="24sp"
             android:textColor="@color/white"
@@ -25,7 +25,7 @@
             android:paddingRight="5dp" />
 
         <Button
-            android:id="@+id/button_help_new_todo"
+            android:id="@+id/button_help_edit_todo"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_centerVertical="true"
@@ -47,14 +47,14 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/layout_new_todo_sub_header"
+        android:id="@+id/layout_edit_todo_sub_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_below="@id/layout_app_bar_new_todo">
+        android:layout_below="@id/layout_app_bar_edit_todo">
 
         <TextView
-            android:id="@+id/textview_new_todo_owner"
+            android:id="@+id/textview_edit_todo_owner"
             android:textSize="20sp"
             android:textColor="@color/white"
             android:layout_width="match_parent"
@@ -78,7 +78,7 @@
             android:layout_gravity="center_horizontal">
 
             <TextView
-                android:text="@string/new_todo"
+                android:text="@string/edit_todo"
                 android:textSize="24sp"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
@@ -100,7 +100,7 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/edittext_new_todo_title"
+                    android:id="@+id/edittext_edit_todo_title"
                     android:hint="@string/todo_title"
                     android:textSize="18sp"
                     android:textColor="@color/white"
@@ -126,7 +126,7 @@
                 android:layout_marginTop="10dp">
 
                 <CheckBox
-                    android:id="@+id/checkbox_new_todo_importance"
+                    android:id="@+id/checkbox_edit_todo_importance"
                     android:text="@string/importance"
                     android:textSize="14sp"
                     android:textColor="@color/white"
@@ -144,8 +144,8 @@
                 android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/button_confirm_new_todo"
-                    android:text="@string/confirm"
+                    android:id="@+id/button_confirm_edit_todo"
+                    android:text="@string/edit"
                     android:textSize="18sp"
                     android:textColor="@color/white"
                     android:layout_width="match_parent"
@@ -154,7 +154,7 @@
                     android:background="@drawable/bg_green" />
 
                 <Button
-                    android:id="@+id/button_cancel_new_todo"
+                    android:id="@+id/button_cancel_edit_todo"
                     android:text="@android:string/cancel"
                     android:textSize="18sp"
                     android:textColor="@color/white"
