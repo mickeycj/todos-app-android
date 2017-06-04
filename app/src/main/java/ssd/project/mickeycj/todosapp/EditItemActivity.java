@@ -91,7 +91,9 @@ public class EditItemActivity extends AppCompatActivity {
     };
 
     private void startActivity(Class<?> cls, int enterAnim, int exitAnim) {
-        startActivity(new Intent(EditItemActivity.this, cls));
+        Intent intent = new Intent(EditItemActivity.this, cls);
+        intent.putExtra("todoIndex", todoIndex);
+        startActivity(intent);
         finish();
         overridePendingTransition(enterAnim, exitAnim);
     }
