@@ -101,6 +101,9 @@ public class EditItemActivity extends AppCompatActivity {
     private void editItem() {
         String title = getItemTitleFromEditText();
         if (!title.equals("") && !title.contains(".") && !title.contains("#") && !title.contains("$") && !title.contains("[") && !title.contains("]")) {
+            if (!itemTitle.equals(title)) {
+                Repository.removeItemFromCurrentItemListInCurrentTodo(todoIndex, itemTitle);
+            }
             Repository.addNewItemToCurrentItemListInCurrentTodo(todoIndex, new Item(title, itemDone, itemCreatedAt));
             onBackPressed();
         } else {
