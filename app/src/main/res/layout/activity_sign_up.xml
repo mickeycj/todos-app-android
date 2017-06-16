@@ -71,8 +71,7 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@drawable/bg_black_gray_line">
-                </FrameLayout>
+                    android:background="@drawable/bg_black_gray_line" />
             </LinearLayout>
 
             <LinearLayout
@@ -97,8 +96,7 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@drawable/bg_black_gray_line">
-                </FrameLayout>
+                    android:background="@drawable/bg_black_gray_line" />
             </LinearLayout>
 
             <LinearLayout
@@ -123,8 +121,7 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@drawable/bg_black_gray_line">
-                </FrameLayout>
+                    android:background="@drawable/bg_black_gray_line" />
             </LinearLayout>
 
             <LinearLayout
@@ -149,8 +146,7 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@drawable/bg_black_gray_line">
-                </FrameLayout>
+                    android:background="@drawable/bg_black_gray_line" />
             </LinearLayout>
 
             <LinearLayout

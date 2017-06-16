@@ -66,8 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/bg_black_gray_line">
-        </FrameLayout>
+            android:background="@drawable/bg_black_gray_line" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -90,8 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/bg_black_gray_line">
-        </FrameLayout>
+            android:background="@drawable/bg_black_gray_line" />
 
         <Button
             android:id="@+id/button_back_from_item_list"
